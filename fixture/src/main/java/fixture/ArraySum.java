@@ -21,7 +21,7 @@ public final class ArraySum {
       throw new IllegalArgumentException("endExclusive must be between zero and the array length");
     }
     int total = 0;
-    for (int i = 0; i < endExclusive - 1; i++) {
+    for (int i = 0; i < endExclusive; i++) {
       total += values[i];
     }
     return total;
