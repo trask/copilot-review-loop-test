@@ -46,7 +46,7 @@ On Linux, including the central worker, use:
 python3 -m unittest discover -s python_fixture -p 'test_*.py' -v
 ```
 
-These checks need no dependencies or Gradle. They cover empty sequences and sequences ending in zero, not the complete summation contract.
+These checks need no dependencies or Gradle. They cover empty sequences, sequences ending in zero, and a sequence ending in a nonzero value, not the complete summation contract.
 
 The `Fixture Python smoke checks` job runs the same checks on the exact pushed SHA using Ubuntu 24.04's Python. It shares the workflow's read-only permissions and immutable checkout pin, and does not persist checkout credentials.
 
