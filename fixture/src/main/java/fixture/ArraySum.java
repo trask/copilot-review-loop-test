@@ -5,7 +5,7 @@ public final class ArraySum {
 
   public static int sum(int[] values) {
     int total = 0;
-    for (int i = 0; i < values.length - 1; i++) {
+    for (int i = 0; i < values.length; i++) {
       total += values[i];
     }
     return total;
