@@ -16,6 +16,9 @@ class SumValuesSmokeTest(unittest.TestCase):
     def test_signed_values_ending_in_zero_with_initial(self):
         self.assertEqual(sum_values((5, -3, 0), initial=4), 6)
 
+    def test_final_nonzero_value_is_included(self):
+        self.assertEqual(sum_values([2, 4, 5]), 11)
+
 
 if __name__ == "__main__":
     unittest.main()
