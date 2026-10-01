@@ -1,6 +1,6 @@
 # copilot-review-loop-test
 
-Private, disposable Java/Gradle fixture for a real Copilot code review. `main` contains a correct array sum and four passing tests. The intentional regression PR skips the final array element, so three tests fail and the empty-array test still passes.
+Disposable Java/Gradle fixture for a real Copilot code review in `trask`'s personal repository. `main` contains a correct array sum and four passing tests. The intentional regression PR skips the final array element, so three tests fail and the empty-array test still passes.
 
 ## Validation
 
@@ -21,8 +21,10 @@ On Linux, the central validator's plan for a change under `fixture/src/main/java
 
 The module uses standard Java main/test source sets, JUnit 5.11.4, and Spotless 7.0.4 with Google Java Format 1.24.0. Spotless supplies the formatting task required by the existing central validator.
 
+`.github/workflows/fixture-ci.yml` runs these check/test tasks on every push, including `main` and the PR's source branch. The `Fixture Gradle checks` job checks out the exact pushed SHA and uses Ubuntu 24.04 with Temurin JDK 21.0.12+8, pinned as `21.0.12+8.0.LTS` in `setup-java`. It has read-only permissions, does not persist checkout credentials, and does not restore caches. There is no PR merge-commit check; the intentional bug must produce a failed check at the source head.
+
 ## Scope
 
-This repository contains only the target build, source, and tests. Review-loop workflows, helpers, state, logs, and credentials belong in `trask/copilot-workflows`. Matching its Gradle task plan does not authorize a run: its current target policy and unauthenticated checkout do not support this private repository. Central integration requires separate authorization.
+This repository contains the target build, source, tests, and ordinary build/test CI. Review-loop workflows, helpers, state, logs, and credentials belong in `trask/copilot-workflows`. Matching its Gradle task plan does not authorize a review-loop run. Central integration and fix publication require separate authorization.
 
-The draft PR is intentionally broken for review. Do not repair it before collecting a submitted Copilot review at that exact head. No merge or automatic publication is intended.
+The draft PR is intentionally broken for review. Do not repair it before collecting a submitted Copilot review at that exact head and completing central publication gates. Keep the PR in draft; do not merge it.
