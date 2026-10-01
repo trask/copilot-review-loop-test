@@ -21,7 +21,7 @@ On Linux, the central validator's plan for a change under `fixture/src/main/java
 
 The module uses standard Java main/test source sets, JUnit 5.11.4, and Spotless 7.0.4 with Google Java Format 1.24.0. Spotless supplies the formatting task required by the existing central validator.
 
-`.github/workflows/fixture-ci.yml` runs these check/test tasks on every push, including `main` and the PR's source branch. The `Fixture Gradle checks` job checks out the exact pushed SHA and uses Ubuntu 24.04 with Temurin JDK 21.0.12+8. It has read-only permissions, does not persist checkout credentials, and does not restore caches. There is no PR merge-commit check; the intentional bug must produce a failed check at the source head.
+`.github/workflows/fixture-ci.yml` runs these check/test tasks on every push, including `main` and the PR's source branch. The `Fixture Gradle checks` job checks out the exact pushed SHA and uses Ubuntu 24.04 with Temurin JDK 21.0.12+8, pinned as `21.0.12+8.0.LTS` in `setup-java`. It has read-only permissions, does not persist checkout credentials, and does not restore caches. There is no PR merge-commit check; the intentional bug must produce a failed check at the source head.
 
 ## Scope
 
