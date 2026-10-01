@@ -1,0 +1,41 @@
+name: Fixture CI
+
+on:
+  push:
+
+permissions:
+  contents: read
+
+jobs:
+  fixture-gradle:
+    name: Fixture Gradle checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    steps:
+      - name: Check out exact source commit
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Set up JDK
+        uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
+        with:
+          distribution: temurin
+          java-version: '21.0.12.1+1'
+          overwrite-settings: false
+      - name: Check source, formatting, and tests
+        env:
+          EXPECTED_SOURCE_SHA: ${{ github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE_SHA"
+          export JAVA_HOME="$(dirname "$(dirname "$(readlink -f "$(command -v java)")")")"
+          java -version
+          /bin/bash ./gradlew --no-daemon :fixture:spotlessJavaCheck :fixture:test
+      - name: Report test counts
+        if: ${{ !cancelled() }}
+        run: |
+          python3 - <<'PY'
+          import xml.etree.ElementTree as ET
+          suite = ET.parse("fixture/build/test-results/test/TEST-fixture.ArraySumTest.xml").getroot()
+          print(", ".join(f"{key}={suite.attrib[key]}" for key in ("tests", "failures", "errors", "skipped")))
+          PY
