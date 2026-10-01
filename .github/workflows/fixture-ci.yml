@@ -21,9 +21,10 @@ jobs:
         uses: actions/setup-java@b6effb05e454b25005698d916606bdc6ffcbf961 # v5
         with:
           distribution: temurin
-          java-version: '21.0.12.1+1'
+          java-version: '21.0.12+8'
           overwrite-settings: false
       - name: Check source, formatting, and tests
+        id: gradle
         env:
           EXPECTED_SOURCE_SHA: ${{ github.sha }}
         run: |
@@ -32,7 +33,7 @@ jobs:
           java -version
           /bin/bash ./gradlew --no-daemon :fixture:spotlessJavaCheck :fixture:test
       - name: Report test counts
-        if: ${{ !cancelled() }}
+        if: ${{ !cancelled() && (steps.gradle.outcome == 'success' || steps.gradle.outcome == 'failure') }}
         run: |
           python3 - <<'PY'
           import xml.etree.ElementTree as ET
