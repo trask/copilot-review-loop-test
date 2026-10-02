@@ -23,6 +23,10 @@ The module uses standard Java main/test source sets, JUnit 5.11.4, and Spotless 
 
 `.github/workflows/fixture-ci.yml` runs these check/test tasks on every push, including `main` and the PR's source branch. The `Fixture Gradle checks` job checks out the exact pushed SHA and uses Ubuntu 24.04 with Temurin JDK 21.0.12+8, pinned as `21.0.12+8.0.LTS` in `setup-java`. It has read-only permissions, does not persist checkout credentials, and does not restore caches. There is no PR merge-commit check; the intentional bug must produce a failed check at the source head.
 
+## Python sequence sum
+
+The independent [Python fixture](python_fixture/README.md) provides `sum_values(values, initial=0)` for integer lists and tuples. Its contract tests use only the standard library and run with `python3 -m unittest python_fixture.test_sum_values -v` from the repository root. Python validation does not require Gradle.
+
 ## Scope
 
 This repository contains the target build, source, tests, and ordinary build/test CI. Review-loop workflows, helpers, state, logs, and credentials belong in `trask/copilot-workflows`. Matching its Gradle task plan does not authorize a review-loop run. Central integration and fix publication require separate authorization.
