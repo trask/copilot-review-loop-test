@@ -1,6 +1,8 @@
 # copilot-review-loop-test
 
-Disposable Java/Gradle fixture for a real Copilot code review in `trask`'s personal repository. `main` contains a correct array sum and four passing tests. The intentional regression PR skips the final array element, so three tests fail and the empty-array test still passes.
+Disposable Java/Gradle fixture for a real Copilot code review in `trask`'s personal repository.
+
+`ArraySum.sum(int[] values)` sums an integer array. `ArraySum.sum(int[] values, int initialValue)` adds every array element to an initial total. For example, `ArraySum.sum(new int[] {2, 3, 4}, 10)` returns `19`. Tests cover empty arrays, single elements, and positive and negative final elements for both overloads.
 
 ## Validation
 

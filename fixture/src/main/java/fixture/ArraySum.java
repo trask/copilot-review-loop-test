@@ -10,4 +10,12 @@ public final class ArraySum {
     }
     return total;
   }
+
+  public static int sum(int[] values, int initialValue) {
+    int total = initialValue;
+    for (int i = 0; i < values.length - 1; i++) {
+      total += values[i];
+    }
+    return total;
+  }
 }

@@ -24,4 +24,24 @@ class ArraySumTest {
   void includesANegativeFinalElement() {
     assertEquals(-2, ArraySum.sum(new int[] {4, -6}));
   }
+
+  @Test
+  void emptyArrayPreservesInitialValue() {
+    assertEquals(10, ArraySum.sum(new int[] {}, 10));
+  }
+
+  @Test
+  void addsTheOnlyElementToInitialValue() {
+    assertEquals(17, ArraySum.sum(new int[] {7}, 10));
+  }
+
+  @Test
+  void addsEveryElementToInitialValue() {
+    assertEquals(19, ArraySum.sum(new int[] {2, 3, 4}, 10));
+  }
+
+  @Test
+  void addsANegativeFinalElementToInitialValue() {
+    assertEquals(8, ArraySum.sum(new int[] {4, -6}, 10));
+  }
 }
