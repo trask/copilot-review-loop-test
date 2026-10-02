@@ -1,0 +1,30 @@
+name: Python fixture CI
+
+on:
+  push:
+    paths:
+      - 'python_fixture/**'
+      - '.github/workflows/python-fixture-ci.yml'
+      - 'AGENTS.md'
+
+permissions:
+  contents: read
+
+jobs:
+  python-unittest:
+    name: Python unittest checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out exact source commit
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Run contract tests
+        env:
+          EXPECTED_SOURCE_SHA: ${{ github.sha }}
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE_SHA"
+          python3 --version
+          python3 -m unittest python_fixture.test_sum_values -v
