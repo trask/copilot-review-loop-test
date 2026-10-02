@@ -40,3 +40,21 @@ jobs:
           suite = ET.parse("fixture/build/test-results/test/TEST-fixture.ArraySumTest.xml").getroot()
           print(", ".join(f"{key}={suite.attrib[key]}" for key in ("tests", "failures", "errors", "skipped")))
           PY
+  fixture-python:
+    name: Fixture Python smoke checks
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out exact source commit
+        uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - name: Check source and run Python smoke tests
+        env:
+          EXPECTED_SOURCE_SHA: ${{ github.sha }}
+          PYTHONDONTWRITEBYTECODE: '1'
+        run: |
+          test "$(git rev-parse HEAD)" = "$EXPECTED_SOURCE_SHA"
+          python3 --version
+          python3 -m unittest discover -s python_fixture -p 'test_*.py' -v
